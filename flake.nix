@@ -34,6 +34,18 @@
           }
         ];
       };
+      demeterExtended = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hardware-configuration.nix
+          ./configuration.nix
+          ./packages.nix
+          {
+            boot.loader.grub.enable = false;
+            boot.loader.generic-extlinux-compatible.enable = true;
+          }
+        ];
+      };
     };
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
@@ -42,6 +54,6 @@
       ];
     };
     images.demeter = nixosConfigurations.demeterImage.config.system.build.sdImage;
-    systems.demeter = nixosConfigurations.demeter.config.system.build.topLevel;
+    systems.demeter = nixosConfigurations.demeter.config.system.build.toplevel;
   };
 }
