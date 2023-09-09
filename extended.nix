@@ -1,4 +1,6 @@
-{
+{pkgs, ...}: let
+  libvpx = pkgs.callPackage ./libvpx.nix;
+in {
   programs = {
     git = {
       enable = true;
@@ -9,4 +11,8 @@
     hostName = "demeter";
     networkmanager.enable = true;
   };
+
+  environment.systemPackages = [
+    libvpx
+  ];
 }
