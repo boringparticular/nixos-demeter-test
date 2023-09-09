@@ -48,7 +48,7 @@
       demeterExtended = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          agenix.nixosModules.agenix
+          agenix.nixosModules.default
           ./hardware-configuration.nix
           ./configuration.nix
           ./packages.nix
