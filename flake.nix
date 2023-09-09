@@ -1,9 +1,18 @@
 {
   description = "Build image";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   outputs = {
     self,
     nixpkgs,
+    home-manager,
+    ...
   }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -40,9 +49,20 @@
           ./hardware-configuration.nix
           ./configuration.nix
           ./packages.nix
+          ./extended.nix
           {
             boot.loader.grub.enable = false;
             boot.loader.generic-extlinux-compatible.enable = true;
+          }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users = {
+                kmies = import ./home.nix;
+              };
+            };
           }
         ];
       };
