@@ -6,12 +6,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    agenix,
     ...
   }: let
     system = "x86_64-linux";
@@ -46,6 +48,7 @@
       demeterExtended = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          agenix.nixosModules.agenix
           ./hardware-configuration.nix
           ./configuration.nix
           ./packages.nix
