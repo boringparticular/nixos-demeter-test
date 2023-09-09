@@ -75,5 +75,6 @@
     };
     images.demeter = nixosConfigurations.demeterImage.config.system.build.sdImage;
     systems.demeter = nixosConfigurations.demeter.config.system.build.toplevel;
+    systems.demeterExtended = nixosConfigurations.demeterExtended.config.system.build.toplevel;
   };
 }
